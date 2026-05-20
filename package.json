@@ -1,0 +1,15 @@
+{
+  "name": "ioc-sensor-agent",
+  "version": "1.0.0",
+  "description": "IoT sensor agent for IOC monitoring system",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js"
+  },
+  "dependencies": {
+    "ads1x15": "^1.2.0",
+    "axios": "^1.16.1",
+    "dotenv": "^17.4.2",
+    "i2c-bus": "^5.2.3"
+  }
+}
