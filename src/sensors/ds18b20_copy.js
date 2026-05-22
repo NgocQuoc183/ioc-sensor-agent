@@ -21,5 +21,19 @@
     const temperature = parseInt(match[1]) / 1000;
     return { waterTemperature: parseFloat(temperature.toFixed(2)) };
   }
+//  Đọc mỗi 2 giây
+setInterval(async () => {
+  try {
+    const data = await readDS18B20();
 
+    console.log(
+      `[${new Date().toLocaleTimeString()}] Nhiệt độ nước:`,
+      data.waterTemperature,
+      '°C'
+    );
+
+  } catch (err) {
+    console.error('Lỗi DS18B20:', err.message || err);
+  }
+}, 2000);
   module.exports = { readDS18B20 };
