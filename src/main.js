@@ -25,33 +25,26 @@ function log(msg) {
   console.log(`[${new Date(now.getTime() + 7 * 60 * 60 * 1000).toISOString().replace('Z', '+07:00')}] ${msg}`);
 }
 
+
 async function sendSensorObservations(sensorName, deviceId, observations) {
   if (observations.length === 0) {
     log(`[WARN] ${sensorName}: Không có dữ liệu để gửi`);
     return;
   }
-
-  // Đang test nên chưa gửi dữ liệu lên server.
   // Nếu cảm biến chỉ có 1 giá trị thì gửi bằng sendObservation.
   // Nếu cảm biến có 2 giá trị thì gửi bằng sendBatch.
   try {
     if (observations.length === 1) {
       const { parameterCode, valueNumeric, unit } = observations[0];
-      // console.log('========\nparameterCode',parameterCode);
-      // console.log('valueNumeric',valueNumeric);
-      // console.log('unit',unit);
-      // console.log('deviceId',deviceId);
-      // console.log('sensorName',sensorName,'========\n');
       // const res = await sendObservation(deviceId, parameterCode, valueNumeric, unit);
-      // log(`${sensorName}: Gửi thành công 1 chỉ số. Response: ${JSON.stringify(res)}`);
-      // log(`${sensorName}: Gửi thành công 1 chỉ số. Response: { deviceId: ${deviceId}, parameterCode: ${parameterCode}, valueNumeric: ${valueNumeric}, unit: ${unit} }`);
+      log(`${sensorName}: Gửi thành công 1 chỉ số. Response: ${JSON.stringify(res)}`);
+      log(`${sensorName}: Gửi thành công 1 chỉ số. Response: { deviceId: ${deviceId}, parameterCode: ${parameterCode}, valueNumeric: ${valueNumeric}, unit: ${unit} }`);
 
       return;
     }
-
     // const res = await sendBatch(deviceId, observations);
-    // log(`${sensorName}: Gửi batch thành công ${observations.length} chỉ số. Response: ${JSON.stringify(res)}`);
-    // log(`${sensorName}: Gửi batch thành công ${observations.length} chỉ số. Response: { deviceId: ${deviceId}, observations: ${JSON.stringify(observations)} }`);
+    log(`${sensorName}: Gửi batch thành công ${observations.length} chỉ số. Response: ${JSON.stringify(res)}`);
+    log(`${sensorName}: Gửi batch thành công ${observations.length} chỉ số. Response: { deviceId: ${deviceId}, observations: ${JSON.stringify(observations)} }`);
   } catch (err) {
     log(`[ERROR] ${sensorName}: Gửi dữ liệu thất bại: ${err.message}`);
   }
@@ -149,6 +142,6 @@ async function sendData() {
 }
 // Chạy ngay lần đầu, sau đó lặp theo chu kỳ
 sendData();
-// setInterval(sendData, POLL_INTERVAL_MS);
+setInterval(sendData, POLL_INTERVAL_MS);
 
 log(`Ứng dụng khởi động. Chu kỳ gửi: ${POLL_INTERVAL_MS / 1000}s`);

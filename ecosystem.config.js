@@ -15,4 +15,20 @@ module.exports = {
       merge_logs: true,
     },
   ],
+deploy: {
+    production: {
+      user: 'raspi',
+
+      host: 'raspi.local',
+
+      ref: 'origin/main',
+
+      repo: 'https://github.com/vietthuan1998/ioc-sensor-agent.git',
+
+      path: '/home/raspi/Project/ioc-sensor-agent',
+
+      'post-deploy':
+        'npm install && pm2 reload ecosystem.config.js',
+    },
+  },
 };
